@@ -6,7 +6,7 @@ let app = express();
 const port = 8080;
 
 app.all("*", (req, res, next) => {
-    console.log(new Date().toUTCString + ": " + req.ip + " " + req.method + " " + req.url);
+    console.log(new Date().toUTCString() + ": " + req.ip + " " + req.method + " " + req.url);
     next();
 });
 
