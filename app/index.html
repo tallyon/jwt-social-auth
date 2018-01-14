@@ -1,0 +1,52 @@
+<html>
+
+<head>
+
+</head>
+
+<body>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '1836970003186767',
+                xfbml: true,
+                version: 'v2.11'
+            });
+            FB.AppEvents.logPageView();
+
+            FB.getLoginStatus(function(response) {
+                console.log("currently this user is:", response);
+
+                if (response.status == "connected") {
+                    console.log("user is connected");
+                    window.location.href = "/authCallback/facebook?userID=" + response.authResponse.userID + "&authToken=" + response.authResponse.accessToken;
+                } else {
+                    console.log("user is not connected");
+                    FB.login(function(response) {
+                        console.log("got response from facebook login:", response);
+                        if (response.status == "connected") {
+                            console.log("user is connected");
+                            window.location.href = "/authCallback/facebook?userID=" + response.authResponse.userID + "&authToken=" + response.authResponse.accessToken;
+                        }
+                    }, {scope: 'public_profile,email'});
+                }
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <div class="fb-like" data-share="true" data-width="450" data-show-faces="true">
+    </div>
+</body>
+
+</html>
